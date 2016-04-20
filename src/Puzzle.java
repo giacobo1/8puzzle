@@ -14,21 +14,22 @@ class Puzzle{
 		// throws Exception;
 	
 		try{
-			System.out.println("a");
 			BufferedReader dado = new BufferedReader(new FileReader(args[0]));
 
-			int i, j, temp;
+			int i, j;
+			char temp;
 			for (i=0;i<3;i++) {
 				for (j=0;j<3;j++) {
-					temp=dado.read();
-					System.out.println("\n" + temp);
+					temp=(char)dado.read();
+					//System.out.println(temp);
 					tabuleiro.setBoard(i, j, temp);
 				}
 			}
 
 			if(tabuleiro.isSolvable()){
-				System.out.println("Jogo ok.\n");
-			}
+				System.out.println("Jogo ok.");
+			}else
+				System.out.println("Jogo insoluvel.");
 
 		}catch(Exception e)
 		{			
