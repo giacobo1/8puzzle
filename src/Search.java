@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 
-
 /* class Search;
  *
  * This class represents a framework for its subclasses. It defines the search method as well as

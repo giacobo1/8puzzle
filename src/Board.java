@@ -1,6 +1,5 @@
-//import java.util.List;
-//import java.util.ArrayList;
 import java.io.*;
+import java.util.Vector;
 
 /*
  *	Implementar:
@@ -42,12 +41,129 @@ class Board{
 
 	}
 
+	public Board(int[][] b) {
+		
+		this.board = new int[3][3];
+				
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				this.board[i][j] = b[i][j];
+			}
+		}
+	}
+
+
+	public Pair findWhiteTile() {
+		
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				if (this.board[i][j] == 0) return new Pair(i, j); 
+			}
+		}
+
+		return null;	
+	}
+
+	public boolean isEqualInPosition(int i, int j, int value) {
+		return (j < 3 && i < 3 && board[i][j] == value)? true : false;
+	}
+
+	
+	private Board swap(Pair original, Pair objective) {
+		int value = this.board[objective.i][objective.j];
+		this.board[objective.i][objective.j] = this.board[original.i][original.j];
+		this.board[original.i][original.j]   = value;
+
+		return this;	
+	}	
+
+	
+	// Number of generated nodes = (nodeCount+=)result.size();
+	public Vector<Board> generateNextBoard(Pair p) {
+		
+		Vector<Board> result = new Vector<Board>();
+
+		int i = p.i;
+		int j = p.j;
+
+		if ( ((i + j) % 2) == 0) {
+		
+			if (j == 2) {
+				
+				if ( i == 0 ) {
+					// podia refatorar o denominador comum	
+					result.add((new Board(this.board)).swap(p, new Pair(i, j - 1)));		
+					result.add((new Board(this.board)).swap(p, new Pair(i + 1, j)));		
+
+				} else {
+					result.add((new Board(this.board)).swap(p, new Pair(i - 1, j)));		
+					result.add((new Board(this.board)).swap(p, new Pair(i, j - 1)));	
+				}
+
+			} else {
+				
+				if ( i == 0 ) {
+					// podia refatorar o denominador comum	
+					result.add((new Board(this.board)).swap(p, new Pair(i, j + 1)));		
+					result.add((new Board(this.board)).swap(p, new Pair(i + 1, j)));		
+
+				} else if (i == 2){
+					result.add((new Board(this.board)).swap(p, new Pair(i - 1, j)));		
+					result.add((new Board(this.board)).swap(p, new Pair(i, j + 1)));	
+				
+				} else {
+					result.add((new Board(this.board)).swap(p, new Pair(i, j + 1)));		
+					result.add((new Board(this.board)).swap(p, new Pair(i, j - 1)));
+					result.add((new Board(this.board)).swap(p, new Pair(i + 1, j)));
+					result.add((new Board(this.board)).swap(p, new Pair(i - 1, j)));
+				}
+			}	
+		
+		} else {
+			
+			if (j == 0) {
+				result.add((new Board(this.board)).swap(p, new Pair(i, j + 1)));		
+				result.add((new Board(this.board)).swap(p, new Pair(i - 1, j)));
+				result.add((new Board(this.board)).swap(p, new Pair(i + 1, j)));
+
+			} else if (j == 1) {// yet, 2 cases
+
+				if (i == 0) {
+					result.add((new Board(this.board)).swap(p, new Pair(i + 1, j)));		
+					result.add((new Board(this.board)).swap(p, new Pair(i, j + 1)));
+					result.add((new Board(this.board)).swap(p, new Pair(i, j - 1)));
+				} else {
+					result.add((new Board(this.board)).swap(p, new Pair(i - 1, j)));		
+					result.add((new Board(this.board)).swap(p, new Pair(i, j - 1)));
+					result.add((new Board(this.board)).swap(p, new Pair(i, j + 1)));
+				}
+
+			} else {
+				result.add((new Board(this.board)).swap(p, new Pair(i, j - 1)));		
+				result.add((new Board(this.board)).swap(p, new Pair(i + 1, j)));
+				result.add((new Board(this.board)).swap(p, new Pair(i - 1, j)));
+
+			}	
+		
+		}	
+
+		
+			return result;
+		}
+	
 
 	public void printBoard() {
 		
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
-				System.out.format("%d ", board[i][j]);
+
+				if (this.board[i][j] == 0) {
+				
+					System.out.format("  "); 
+				} else {
+					
+					System.out.format("%d ", board[i][j]);
+				}
 			}
 			System.out.format("\n");
 		}
