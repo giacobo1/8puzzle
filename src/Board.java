@@ -1,12 +1,58 @@
 //import java.util.List;
 //import java.util.ArrayList;
+import java.io.*;
+
+/*
+ *	Implementar:
+ *	- getnextboard;
+ *	- findwhitetale;
+ *	- isInsolutionpath
+ *	- isequalinposition
+ *
+ * */
+
 class Board{
 
 	private int[][] board;
 
-	public Board() {
-		board= new int[3][3];
+	public Board(String fileName) {
+
+		board = new int[3][3];
+
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(fileName)); 
+			String line = null;
+			
+			int i = 0;
+			
+			// Assumes 0 represents the blank tile;
+			while ( ( line = reader.readLine() ) != null) {
+				String[] data = line.split(" ");
+
+				for (int j = 0; j < 3; j++) {
+					board[i][j] = Integer.parseInt(data[j]);
+				}
+
+				i++;
+			}
+
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+
 	}
+
+
+	public void printBoard() {
+		
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				System.out.format("%d ", board[i][j]);
+			}
+			System.out.format("\n");
+		}
+	}
+
 
 	public Boolean isSolvable() {
 		int i, j; //representa o ponto a ser verificado se esta invertido
@@ -36,8 +82,5 @@ class Board{
 		}
 	}
 
-	public int[][] getBoard(int i, int j) {
-		return board[i][j];
-	}
 
 }
