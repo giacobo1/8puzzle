@@ -57,6 +57,11 @@ public class Search {
 	public void addToSolutionBoard(Board b) {
 		this.solutionBoard=b;
 	}
+	//retorna a profundidade da arvore
+	public int getSizeSolutionPath() {
+		return solutionPath.size();
+	}
+
 
 
 	//mostra todos caminhos até a solução

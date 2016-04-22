@@ -4,6 +4,8 @@ class BreadthSearch extends Search {
 
 	private int level;
 
+	private Hashtable visited;
+
 	BreadthSearch(Board b, Board s) {
 		super(b,s);
 		this.level = 0;
@@ -15,29 +17,27 @@ class BreadthSearch extends Search {
 	// lembrar de contar o numero de nos gerados
 	public void BFS(Board v, Queue<Board> q) {
 
-		//this.level++;
+		this.level++;
 		v.printBoard();
 
 		System.out.format("\n");
 		
-		if (v.isEqual(this.getInitialBoard().getBoard())) {
-			this.level++;
-		}
 
 		if (v.isEqual(this.getSolutionBoard().getBoard())) {
 			this.addToSolutionBoard(v);
-			System.out.println("Termino com nivel: " + this.level);
+			System.out.println("Termino com " + this.level + " nos gerados.");
 			return;
 		}
 
-		//if (v.isEqual(v.generateNextBoard(v.findWhiteTile()).getBoard())) {
-		//	this.level++;
-		//}
-
+		
 		for (Board b: v.generateNextBoard(v.findWhiteTile())) {
-			
-			b.setParentNode(v);
-			q.add(b);
+		
+			//verifica se é o nodo inicial, se for nao coloca na lista
+			if (!b.isEqual(this.getInitialBoard().getBoard())) {
+				b.setParentNode(v);
+				q.add(b);
+			}
+
 		}
 
 
@@ -66,7 +66,6 @@ class BreadthSearch extends Search {
 		BFS(this.getInitialBoard(), Q);
 		
 		buildSolutionPath();
-
 
 	}
 
