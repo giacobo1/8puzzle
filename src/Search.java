@@ -9,17 +9,21 @@ import java.util.ArrayList;
 
 public class Search {
 
-	private int nodeCounter;
-	private Board initialBoard;
-	private Board solutionBoard;
-	private ArrayList<Board> solutionPath;
+	protected int nodeCounter;
+	protected Board initialBoard;
+	protected Board metaBoard;
+	protected Board solutionBoard;
+	protected ArrayList<Board> solutionPath;
+	
+
 
 	// It needs two boards for comparision sake.
 	public Search(Board b, Board s) {
 	
 		this.nodeCounter   = 0;
 		this.initialBoard  = b;
-		this.solutionBoard = s;
+		this.metaBoard 	   = s;
+		this.solutionPath  = null;
 		this.solutionPath  = new ArrayList<Board>();
 	}
 
@@ -33,10 +37,6 @@ public class Search {
 		return this.solutionPath.size();
 	}
 
-	// Add the new-born board to the solutionpath.	
-	public void addToSolutionPath(Board b) {
-		this.solutionPath.add(b);
-	}
 	
 	// service for graphic interface;
 	public ArrayList<Board> getSolutionPath() {
