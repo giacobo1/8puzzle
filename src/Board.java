@@ -1,22 +1,17 @@
 import java.io.*;
 import java.util.Vector;
 
-/*
- *	Implementar:
- *	- getnextboard;
- *	- findwhitetale;
- *	- isInsolutionpath
- *	- isequalinposition
- *
- * */
 
 class Board{
 
+	private Board parent;
 	private int[][] board;
 
 	public Board(String fileName) {
 
-		board = new int[3][3];
+		this.board = new int[3][3];
+
+		this.parent = null;
 
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(fileName)); 
@@ -43,8 +38,9 @@ class Board{
 
 	public Board(int[][] b) {
 		
-		this.board = new int[3][3];
-				
+		this.board  = new int[3][3];
+		this.parent = null;		
+
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				this.board[i][j] = b[i][j];
@@ -52,6 +48,29 @@ class Board{
 		}
 	}
 
+	public void setParentNode(Board p) {
+		this.parent = p;
+	}
+
+	public Board getParentNode() {
+		return this.parent;
+	}
+
+	public int[][] getBoard() {
+		return this.board;
+	}
+	
+	// Testada e funcionando 
+	public boolean isEqual(int[][] b) {
+		boolean result = true;
+
+		for (int i = 0; i < 3; i++)
+		for (int j = 0;	j < 3; j++) {
+			result = result && (this.board[i][j] == b[i][j]); 
+		}
+
+		return result;
+	}
 
 	public Pair findWhiteTile() {
 		
@@ -64,9 +83,7 @@ class Board{
 		return null;	
 	}
 
-	public boolean isEqualInPosition(int i, int j, int value) {
-		return (j < 3 && i < 3 && board[i][j] == value)? true : false;
-	}
+	
 
 	
 	private Board swap(Pair original, Pair objective) {
