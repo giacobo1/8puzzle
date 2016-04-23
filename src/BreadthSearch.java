@@ -23,7 +23,7 @@ class BreadthSearch extends Search {
 		System.out.format("\n");
 		
 
-		if (v.isEqual(this.getSolutionBoard().getBoard())) {
+		if (v.isEqual(this.solutionBoard.getBoard())) {
 			this.addToSolutionBoard(v);
 			System.out.println("Termino com " + this.level + " nos gerados.");
 			return;
@@ -33,7 +33,7 @@ class BreadthSearch extends Search {
 		for (Board b: v.generateNextBoard(v.findWhiteTile())) {
 		
 			//verifica se é o nodo inicial, se for nao coloca na lista
-			if (!b.isEqual(this.getInitialBoard().getBoard())) {
+			if (!b.isEqual(this.initialBoard.getBoard())) {
 				b.setParentNode(v);
 				q.add(b);
 			}
@@ -63,7 +63,7 @@ class BreadthSearch extends Search {
 		Queue<Board> Q = new LinkedList<Board>();
 		
 
-		BFS(this.getInitialBoard(), Q);
+		BFS(this.initialBoard, Q);
 		
 		buildSolutionPath();
 

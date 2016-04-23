@@ -9,10 +9,10 @@ import java.util.ArrayList;
 
 public class Search {
 
-	private int nodeCounter;
-	private Board initialBoard;
-	private Board solutionBoard;
-	private ArrayList<Board> solutionPath;
+	protected int nodeCounter;
+	protected Board initialBoard;
+	protected Board solutionBoard;
+	protected ArrayList<Board> solutionPath;
 
 	// It needs two boards for comparision sake.
 	public Search(Board b, Board s) {
@@ -44,7 +44,7 @@ public class Search {
 	}
 
 
-
+/*
 	//Utilizado no Breadth
 	public Board getSolutionBoard() {
 		return this.solutionBoard;
@@ -60,7 +60,7 @@ public class Search {
 	//retorna a profundidade da arvore
 	public int getSizeSolutionPath() {
 		return solutionPath.size();
-	}
+	}*/
 
 
 
