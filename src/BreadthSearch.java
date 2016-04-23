@@ -18,13 +18,13 @@ class BreadthSearch extends Search {
 	public void BFS(Board v, Queue<Board> q) {
 
 		this.level++;
-		v.printBoard();
+		//v.printBoard();
 
-		System.out.format("\n");
+		//System.out.format("\n");
 		
 
 		if (v.isEqual(this.solutionBoard.getBoard())) {
-			this.addToSolutionBoard(v);
+			this.solutionBoard=v;
 			System.out.println("Termino com " + this.level + " nos gerados.");
 			return;
 		}
@@ -49,7 +49,7 @@ class BreadthSearch extends Search {
 	// funcionando
 	public void buildSolutionPath() {
 		
-		Board u = getSolutionBoard();
+		Board u = this.solutionBoard;
 
 		while( u != null ) {
 			this.addToSolutionPath(u);
