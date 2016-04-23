@@ -24,7 +24,7 @@ class Main {
 		if (board.isSolvable()) {
 			System.out.println("Play.\n");
 			BreadthSearch breadth = new BreadthSearch(board, metaboard);
-			breadth.printSolutionPath();
+			//breadth.printSolutionPath();
 		}else{
 			System.out.println("Jogo nao solucionavel.\n");
 		}

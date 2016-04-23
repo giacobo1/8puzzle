@@ -4,11 +4,12 @@ class BreadthSearch extends Search {
 
 	private int level;
 
-	private Hashtable visited;
+	private ArrayList<Board> visited;
 
 	BreadthSearch(Board b, Board s) {
 		super(b,s);
 		this.level = 0;
+		this.visited= new ArrayList<Board>();
 	
 		this.run();
 	}
@@ -18,14 +19,15 @@ class BreadthSearch extends Search {
 	public void BFS(Board v, Queue<Board> q) {
 
 		this.level++;
-		//v.printBoard();
+		this.visited.add(v);
+		v.printBoard();
 
-		//System.out.format("\n");
+		System.out.format("\n");
 		
 
 		if (v.isEqual(this.solutionBoard.getBoard())) {
 			this.solutionBoard=v;
-			System.out.println("Termino com " + this.level + " nos gerados.");
+			System.out.println("Termino com " + this.level + " nos gerados. ");
 			return;
 		}
 
@@ -33,7 +35,7 @@ class BreadthSearch extends Search {
 		for (Board b: v.generateNextBoard(v.findWhiteTile())) {
 		
 			//verifica se é o nodo inicial, se for nao coloca na lista
-			if (!b.isEqual(this.initialBoard.getBoard())) {
+			if (!this.isVisited(b)){//!b.isEqual(this.initialBoard.getBoard())) {//!this.isVisited(b)){
 				b.setParentNode(v);
 				q.add(b);
 			}
@@ -50,13 +52,33 @@ class BreadthSearch extends Search {
 	public void buildSolutionPath() {
 		
 		Board u = this.solutionBoard;
+		this.addToSolutionPath(u);
 
 		while( u != null ) {
-			this.addToSolutionPath(u);
 			u = u.getParentNode();
+			this.addToSolutionPath(u);
 		}
 
 	}
+
+	//mostra todos caminhos até a solução
+	public void printSolutionPath() {
+		for(int i=0;i<getSolutionCount()-1;i++){
+			getSolutionPath().get(i).printBoard(); 
+			System.out.println(" ");
+		}
+
+	}
+
+	public Boolean isVisited(Board b) {
+		for(int i=0;i<visited.size();i++){
+			if(visited.get(i).isEqual(b.getBoard())){
+				return true;
+			}
+		}
+		return false;
+	}
+
 
 	public void run() {
 
@@ -65,7 +87,9 @@ class BreadthSearch extends Search {
 
 		BFS(this.initialBoard, Q);
 		
-		buildSolutionPath();
+		this.buildSolutionPath();
+
+		this.printSolutionPath();
 
 	}
 

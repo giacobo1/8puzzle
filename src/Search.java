@@ -43,37 +43,6 @@ public class Search {
 		return this.solutionPath;
 	}
 
-
-/*
-	//Utilizado no Breadth
-	public Board getSolutionBoard() {
-		return this.solutionBoard;
-	}
-	//Utilizado no Breadth
-	public Board getInitialBoard() {
-		return this.initialBoard;
-	}
-	//Utilizado no Breadth
-	public void addToSolutionBoard(Board b) {
-		this.solutionBoard=b;
-	}
-	//retorna a profundidade da arvore
-	public int getSizeSolutionPath() {
-		return solutionPath.size();
-	}*/
-
-
-
-	//mostra todos caminhos até a solução
-	public void printSolutionPath() {
-		for(int i=0;i<solutionPath.size();i++){
-			solutionPath.get(i).printBoard(); 
-			System.out.println(" ");
-		}
-	}
-
-
-
 	// This method implements the actual search. Therefore, it must be overriden by its subclasses;
 	public void run() {}
 
