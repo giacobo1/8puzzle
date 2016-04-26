@@ -1,5 +1,5 @@
 CC = javac
 
 all:
-	$(CC) javac Main.java
+	$(CC) Main.java
 
