@@ -8,6 +8,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.scene.shape.Rectangle;
 import java.util.ArrayList;
+import javafx.util.Duration;
+
+import javafx.animation.Animation;
+import javafx.animation.Transition;
+
 
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.StackPane;
@@ -46,8 +51,14 @@ public class Main extends Application {
 
 	private String search_method_name;
 
+	private int animationStep;
+
 
 	private boolean solvable;
+	
+	private TilePane grid;
+
+	private ArrayList<Cell> cells;
 
 	private Text status;	
 
@@ -59,6 +70,8 @@ public class Main extends Application {
 		List<String> args = p.getRaw();
 	
 		this.searchAlgorithm = null;
+
+		this.animationStep = 0;
 
 		this.solutionPath = null;
 		this.search_method_name = null;	
@@ -73,9 +86,18 @@ public class Main extends Application {
 
 		status = new Text();
 		
-		status.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
+		status.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
 
+		cells = new ArrayList<Cell>();
 
+		int[][] rawBoad = inputBoard.getBoard();
+
+		for (int i = 0; i < 3; i++) {
+			for(int j = 0; j < 3; j++){
+				int value = rawBoad[i][j];
+				cells.add(new Cell(value,Color.RED));
+			}
+		}
 	}
 
 
@@ -86,7 +108,7 @@ public class Main extends Application {
 
 	//ArrayList<Rectangle> tiles = new ArrayList<Rectangle>();
 
-	TilePane grid = new TilePane();
+	grid = new TilePane();
 
 	grid.setVgap(4);
 	grid.setHgap(4);
@@ -96,10 +118,9 @@ public class Main extends Application {
 
 	//grid.setPadding(new Insets(5,5,5,5));
 
+	
 	for (int i = 0; i < 9; i++) {
-		Rectangle tmp = new Rectangle(80.0,80.0, Color.RED);
-		
-		grid.getChildren().add(tmp);	
+		grid.getChildren().add(cells.get(i).getBody());	
 	}
 
 	
@@ -137,7 +158,35 @@ public class Main extends Application {
 
 	Button playBtn = new Button("Play");
 	playBtn.setPrefSize(240,20);
-	
+
+	playBtn.setOnAction(new EventHandler<ActionEvent>() {
+	 
+		@Override
+		public void handle(ActionEvent event) {
+			final Animation animation = new Transition() {
+				{
+					//setCycleCount();	
+					setCycleDuration(Duration.seconds(180));	
+				}
+
+				@Override
+				protected void interpolate(double frac) {
+					
+					if (animationStep >= 0) {
+						updateGrid(solutionPath.get(animationStep));
+						animationStep--;
+					}
+
+				}
+			
+			};
+			
+			animation.play();
+
+		}
+	});	
+
+
 	Button runBtn = new Button("Run");
 	runBtn.setPrefSize(240,20);
 	runBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -161,6 +210,7 @@ public class Main extends Application {
 					String totalNodes   = Integer.toString(searchAlgorithm.getTotalOfNodes()); 
 					String solutioNodes = Integer.toString(solutionPath.size()); 
 
+					animationStep = solutionPath.size() - 1;
 
 					status.setText("Nodos Gerados: " + totalNodes + "\nNodos na Solução: " + solutioNodes ); 
 
@@ -177,12 +227,16 @@ public class Main extends Application {
 
 	StackPane summary = new StackPane();
 
-	Rectangle summBackroung = new Rectangle(270,120, Color.BLUE);
+	Rectangle summBackroung = new Rectangle(270,120, Color.WHITE);
+
+	summBackroung.setStrokeWidth(2);
+
+    	summBackroung.setStroke(Color.BLACK);
 
 	status = new Text();
 	
-	status.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
-	status.setFill(Color.WHITE);
+	//status.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
+	//status.setFill(Color.WHITE);
 
 	summary.getChildren().addAll(summBackroung, status);
 
@@ -200,7 +254,16 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-
+	private void updateGrid(Board b) {
+		
+		int[][] rawBoard = b.getBoard();
+	
+		for (int i = 0; i < 3; i++) {
+			for(int j = 0; j < 3; j++) {
+				cells.get( ( (i * 3) + j) ).setAspect(rawBoard[i][j]);
+			}			
+		}
+	}
 
  public static void main(String[] args) {
         launch(args);

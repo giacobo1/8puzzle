@@ -109,15 +109,16 @@ public class DepthSearch extends Search {
 
 		DFS(this.initialBoard, 0);
 
-		System.out.format("Numero de nos criados: %d\n", this.nodeCounter);
+		//System.out.format("Numero de nos criados: %d\n", this.nodeCounter);
 
 		buildSolutionPath();
-
+		
+		/*
 		System.out.format("Numero de nos na solução: %d\n\n", this.solutionPath.size());
 		for (Board b: this.solutionPath) {
 			b.printBoard();
 			System.out.format("\n");
-		}
+		}*/
 
 
 	}
