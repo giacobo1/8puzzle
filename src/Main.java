@@ -165,8 +165,9 @@ public class Main extends Application {
 		public void handle(ActionEvent event) {
 			final Animation animation = new Transition() {
 				{
-					//setCycleCount();	
-					setCycleDuration(Duration.seconds(180));	
+					//setCycleCount();
+					setRate(0.3);	
+					setCycleDuration(Duration.seconds(600));	
 				}
 
 				@Override
