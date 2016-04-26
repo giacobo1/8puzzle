@@ -1,11 +1,11 @@
 import java.io.*;
 import java.util.Vector;
 
-
 class Board{
 
 	private Board parent;
 	private int[][] board;
+
 
 	public Board(String fileName) {
 
@@ -39,6 +39,7 @@ class Board{
 	public Board(int[][] b) {
 		
 		this.board  = new int[3][3];
+
 		this.parent = null;		
 
 		for (int i = 0; i < 3; i++) {
@@ -186,24 +187,26 @@ class Board{
 		}
 	}
 
-
 	public Boolean isSolvable() {
 		int i, j; //representa o ponto a ser verificado se esta invertido
 		int x, y; //representa o ponto a ser comparado -- laço mais rapido
 		int cont=0;
+		int[] temp= new int[9];
 
-		//trecho abaixo é temporario e deve ser paralelo!
+		x=0;
 		for (i=0;i<3;i++) {
 			for (j=0;j<3;j++) {
-				for (x=i;x<3;x++) {
-					for(y=0;y<3;y++) {
-					
-						if((board[x][y]!=0) && (board[i][j]!=0) && (y!=j && x!=i) && (j<=y)){
-							if(board[i][j]>board[x][y]){
-								cont++;
-							}
-						}
+				temp[x]=board[i][j];
+				x++;
+			}
+		}
 
+		//trecho abaixo é temporario e deve ser paralelo!
+		for (i=0;i<8;i++) {
+			for (j=i+1;j<9;j++) {
+				if((temp[i]!=0) && (temp[j]!=0)){
+					if(temp[i]>temp[j]){
+						cont++;
 					}
 				}
 			}

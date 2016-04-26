@@ -80,7 +80,7 @@ public class DepthSearch extends Search {
 		return result;
 	}
 
-	// precisa de testes
+	
 	public void buildSolutionPath() {
 		
 		Board u = solutionBoard.getParentNode();

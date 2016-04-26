@@ -68,13 +68,13 @@ public class Main extends Application {
 		Parameters p = getParameters();
 		
 		List<String> args = p.getRaw();
-	
+
 		this.searchAlgorithm = null;
 
 		this.animationStep = 0;
 
 		this.solutionPath = null;
-		this.search_method_name = null;	
+		this.search_method_name = "Breadth-Search";	
 
 		this.inputBoard = new Board(args.get(0));
 		
@@ -91,7 +91,6 @@ public class Main extends Application {
 		cells = new ArrayList<Cell>();
 
 		int[][] rawBoad = inputBoard.getBoard();
-
 		for (int i = 0; i < 3; i++) {
 			for(int j = 0; j < 3; j++){
 				int value = rawBoad[i][j];
@@ -180,6 +179,7 @@ public class Main extends Application {
 
 				}
 			
+
 			};
 			
 			animation.play();
@@ -198,7 +198,7 @@ public class Main extends Application {
 			if (solvable) {
 				
 				if (search_method_name.equals("Breadth-Search")) {
-					searchAlgorithm = new DepthSearch(inputBoard, solutionBoard); // nao integrei com o codigo do michael ainda [por breadth]	
+					searchAlgorithm = new BreadthSearch(inputBoard, solutionBoard); // nao integrei com o codigo do michael ainda [por breadth]	
 				} else {
 					searchAlgorithm = new DepthSearch(inputBoard, solutionBoard); // nao integrei com o codigo do michael ainda [por breadth]	
 				}
@@ -256,7 +256,11 @@ public class Main extends Application {
     }
 
 	private void updateGrid(Board b) {
-		
+	
+		/*
+		 *	[Parei aqui]
+		 *	No código do michael, quando chama play parece que passa uma board que eh nula
+		 * */	
 		int[][] rawBoard = b.getBoard();
 	
 		for (int i = 0; i < 3; i++) {

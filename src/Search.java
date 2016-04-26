@@ -11,6 +11,7 @@ public class Search {
 
 	protected int nodeCounter;
 	protected Board initialBoard;
+
 	protected Board metaBoard;
 	protected Board solutionBoard;
 	protected ArrayList<Board> solutionPath;
